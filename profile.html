@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{%block content%}
+    
+
+    <div class="row w-100 mx-auto justify-content-center mt-3">
+        <div class="col-md-6" style="display: block" id="profile">
+            <div class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3>User Information</h3>
+                <div class="row">
+                    <div class="col-md-4" style="border-right: 1px solid #ccc;">
+                        <img src="https://via.placeholder.com/150" alt="User Picture" class="img-fluid">
+                    </div>
+                    <div class="col-md-8" style="border-left: 1px solid #ccc;">
+                        <div class="row mb-2">
+                            <div class="col-md-4" style="border-right: 1px solid #ccc;">Name:</div>
+                            <div class="col-md-8" style="border-left: 1px solid #ccc;"><span id="name" >John Doe</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4" style="border-right: 1px solid #ccc;">Surname:</div>
+                            <div class="col-md-8" style="border-left: 1px solid #ccc;"><span id="surname" >Doe</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4" style="border-right: 1px solid #ccc;">Email:</div>
+                            <div class="col-md-8" style="border-left: 1px solid #ccc;"><span id="email" >john.doe@example.com</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4" style="border-right: 1px solid #ccc;">Date of Birth:</div>
+                            <div class="col-md-8" style="border-left: 1px solid #ccc;"><span id="dob" >1990-01-01</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4" style="border-right: 1px solid #ccc;">Income:</div>
+                            <div class="col-md-8" style="border-left: 1px solid #ccc;"><span id="income" >$100000</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4"></div>
+                    <div class="col-8 justify-content-end">
+                        <button class="btn btn-outline-secondary" onclick="document.getElementById('editProfile').style.display='block';document.getElementById('profile').style.display='none'">Edit profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    
+        <div class="col-6" style="display: none" id="editProfile">
+            <div class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3>Edit User Information</h3>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+
+                    <div class="row">
+                        
+                        <div class="col-4" style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;">
+                            <img src="https://via.placeholder.com/150" alt="User Picture" class="img-fluid" id="editProfileImg">
+
+                            <div class="mb-3 mt-3">
+                                <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('uploadImage').click();">Upload Image</button>
+                                <input type="file" id="uploadImage" name="image" style="display: none;" onchange="document.getElementById('editProfileImg').src=window.URL.createObjectURL(this.files[0])">
+                            </div>
+                        </div>
+
+                        <div class="col-6" style="border-right: 1px solid #ccc;">
+                            <div class="row mb-2">
+                                <div class="col-4" style="border-right: 1px solid #ccc;">Name:</div>
+                                <div class="col-8" style="border-left: 1px solid #ccc;">
+                                    <input type="text" id="name" name="name" value="John Doe" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Name">
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-4" style="border-right: 1px solid #ccc;">Surname:</div>
+                                <div class="col-8" style="border-left: 1px solid #ccc;">
+                                    <input type="text" id="name" name="name" value="John Doe" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Name">
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-4" style="border-right: 1px solid #ccc;">Email:</div>
+                                <div class="col-8" style="border-left: 1px solid #ccc;">
+                                    <input type="email" id="email" name="email" value="john.doe@example.com" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Email">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-4" style="border-right: 1px solid #ccc;">Date of Birth:</div>
+                                <div class="col-8" style="border-left: 1px solid #ccc;">
+                                    <input type="date" id="dob" name="dob" value="1990-01-01" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Date of birth">
+
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-4" style="border-right: 1px solid #ccc;">Income:</div>
+                                <div class="col-8" style="border-left: 1px solid #ccc;">
+                                    <input type="number" id="income" name="income" value="100000" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Income">
+
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-10 d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary mr-3" id="cancelBtn" onclick="document.getElementById('editProfile').style.display='none'; document.getElementById('profile').style.display='block'">Cancel</button>
+
+                        </div>
+
+                        <div class="col-2 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-secondary ml-3" id="submitBtn">Submit</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="col-6" style="display: block" id="profile">
+            <div class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3>Change Password</h3>
+                <form action="/submit" method="post" id="changePassword">
+                    <div class="row mb-2">
+                        <div class="col-4" style="border-right: 1px solid #ccc;">Current Password:</div>
+                        <div class="col-8" style="border-left: 1px solid #ccc;">
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Current Password">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-4" style="border-right: 1px solid #ccc;">New Password:</div>
+                        <div class="col-8" style="border-left: 1px solid #ccc;">
+                            <input type="password" id="newPassword" name="newPassword" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="New Password">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-4" style="border-right: 1px solid #ccc;">Confirm Password:</div>
+                        <div class="col-8" style="border-left: 1px solid #ccc;">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control form-control-sm" style="border-right: 1px solid #ccc;" placeholder="Confirm Password">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-secondary" id="submitChangePasswordBtn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <hr class="w-100 mx-auto my-3"/>
+    
+<div class="row mx-auto d-flex justify-content-center">
+    <div class="col-6 d-flex justify-content-center" style="height: 100%;" id="finGoalsCol">
+        <div id="finGoalsContainer" class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+            <h3>Manage Your Categories</h3>
+
+            <div class="row mx-auto mb-3 mt-3">
+                <form>
+                    <div class="col-12 justfiy-content-start mb-3">
+                        <span class="mb-3">Add Category</span>
+                        <input type="text" class="form-control" id="catName" aria-describedby="emailHelp" placeholder="Enter category name">
+                    </div>
+
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-secondary mb-3" style="border-radius: 8px; width:100px; color:#fcfad4">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <h3>Main Categories</h3>
+                </div>
+                <div class="col-6">
+                    <h3>User Categories</h3>
+                </div>
+            </div>
+            
+
+            <div class="row">
+
+                <div class="col-6">
+                    <div class="row mx-auto mb-3" style="overflow: auto; max-height: 200px;">
+                        <div class="col-12 justfiy-content-start">
+                            <span>- Main Category</span>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="col-6" style="overflow: auto; max-height: 200px;">
+                    <!-- for loop comes here -->
+                    <div class="row mb-3" style="border-right: 1px solid #ccc;">
+                        <div class="col-6 justfiy-content-start">
+                            <span>- User Category</span>
+                        </div>
+        
+                        <div class="col-6 d-flex justify-content-end">
+                            <button class="btn btn-outline-secondary" onclick="">Delete</button>
+                        </div>
+                        
+                    </div>
+                    <!-- ends for loop -->
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-6 d-flex justify-content-center" style="height: 100%;" id="finGoalsCol">
+        <div id="finGoalsContainer" class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+            <h3>Help Links</h3>
+            <div style="overflow: auto; max-height: 250px; min-height: auto;">
+            <div class="row mx-auto my-3">
+                <div class="col-2 mr-3">
+                    <img src="https://via.placeholder.com/200x150" alt="Help Link" class="img-fluid mx-auto d-block mt-3" style="max-width: 125px; min-width: 25x;">
+                </div>
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-9 mt-3 mb-3">
+
+                    <div class="row">
+                        <div class="col-12 mr-3">
+                            <h4>Title</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            Description
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+
+            <div class="row mx-auto my-3">
+                <div class="col-2 mr-3">
+                    <img src="https://via.placeholder.com/200x150" alt="Help Link" class="img-fluid mx-auto d-block mt-3" style="max-width: 125px; min-width: 25x;">
+                </div>
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-9 mt-3 mb-3">
+
+                    <div class="row">
+                        <div class="col-12 mr-3">
+                            <h4>Title</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            Description
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+            <div class="row mx-auto my-3">
+                <div class="col-2 mr-3">
+                    <img src="https://via.placeholder.com/200x150" alt="Help Link" class="img-fluid mx-auto d-block mt-3" style="max-width: 125px; min-width: 25x;">
+                </div>
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-9 mt-3 mb-3">
+
+                    <div class="row">
+                        <div class="col-12 mr-3">
+                            <h4>Title</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            Description
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+            <div class="row mx-auto my-3">
+                <div class="col-2 mr-3">
+                    <img src="https://via.placeholder.com/200x150" alt="Help Link" class="img-fluid mx-auto d-block mt-3" style="max-width: 125px; min-width: 25x;">
+                </div>
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-9 mt-3 mb-3">
+
+                    <div class="row">
+                        <div class="col-12 mr-3">
+                            <h4>Title</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            Description
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+        </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}  

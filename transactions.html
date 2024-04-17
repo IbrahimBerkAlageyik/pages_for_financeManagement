@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{%block content%}
+    
+    <div class="row w-100 mx-auto justify-content-center mt-3" style="border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa;">
+        <h2 class="text-center mt-3">Record Transaction</h2>
+        <hr class="w-75 mx-auto my-3"/>
+        
+        <form method="POST" class="w-100 p-3">
+            <div class="row w-100 mx-auto justify-content-center">
+                <div class="col-2 mb-3">
+                    <label for="name" class="form-label" style="color: #343a40;">Target</label>
+                    <input type="text" class="form-control form-control-sm" id="name" name="name" style="border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="amount" class="form-label" style="color: #343a40;">Amount</label>
+                    <input type="number" class="form-control form-control-sm" id="amount" name="amount" style="border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+
+                <div class="col-2 mb-3">
+                    <label for="date" class="form-label" style="color: #343a40;">Rate</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" id="rate" name="type" style="border: 1px solid #ccc; border-radius: 5px;" readonly>
+                        <button class="btn btn-outline-secondary ml-1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: 1px solid #ccc; border-radius: 0 5px 5px 0;">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" style="width: 100%;">
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('rate').value = 'Once'">Once</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('rate').value = 'Weekly'">Weekly</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('rate').value = 'Monthly'">Monthly</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('rate').value = 'Yearly'">Yearly</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-2 mb-3">
+                    <label for="date" class="form-label" style="color: #343a40;">Type</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" id="type" name="type" style="border: 1px solid #ccc; border-radius: 5px;" readonly>
+                        <button class="btn btn-outline-secondary ml-1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: 1px solid #ccc; border-radius: 0 5px 5px 0;">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" style="width: 100%;">
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('type').value = 'Income'">Income</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('type').value = 'Expense'">Expense</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="date" class="form-label" style="color: #343a40;">Date</label>
+                    <input type="date" class="form-control form-control-sm" id="date" name="date" style="border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+                
+                <div class="col-2 mb-3">
+                    <label for="category" class="form-label" style="color: #343a40;">Category</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" id="category" name="category" style="border: 1px solid #ccc; border-radius: 5px;" readonly>
+                        <button class="btn btn-outline-secondary ml-1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: 1px solid #ccc; border-radius: 0 5px 5px 0;">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" style="width: 100%; max-height: 150px; overflow-y: auto;">
+
+                            {% for category_name in categories %}
+                            <li><a class="dropdown-item" href="#" onclick="document.getElementById('category').value = '{{ category_name }}'">{{ category_name }}</a></li>
+                            {% endfor %}
+
+                            
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <hr class="w-75 mx-auto my-3"/>
+            <div class="row w-100 mx-auto justify-content-center">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-sm btn-secondary" style="border-radius: 8px; width:100px; color:#fcfad4">Add</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+    <hr class="w-100 mx-auto my-3"/>
+
+
+    <div id="transactions" style="display: block; margin-top: 20px" >
+
+        <div class="row">
+            <div class="col-12">
+                <div class="dropdown float-start">
+                    <button class="btn secondary dropdown"  type="button" id="dropdownMenuButtonTransactions" data-bs-toggle="dropdown" aria-expanded="false">
+                        <h3><u>Transaction History</u></h3>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a id="transactionsHistory"  class="dropdown-item" onclick="switch_visibility('transactions')">Transaction History</a></li>
+                        <li><a id="regularHistory"  class="dropdown-item" onclick="switch_visibility('regular')">Regular Transactions</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row w-100 mx-auto justify-content-center mt-3" style="border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa;">
+            <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 8px 0 0 8px;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Target:</a>
+            </div>
+
+            <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Amount:</a>
+            </div>
+
+            <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Type:</a>
+            </div>
+
+            <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Date:</a>
+            </div>
+
+            <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Category:</a>
+            </div>
+
+            
+            <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0; text-align: left;">
+            </div>
+        
+        </div>
+
+        <div class="col-12" style="overflow: auto; max-height: 600px; min-height: 600px;">
+            {% for transaction in transactions %}
+            <div class="row w-100 mx-auto justify-content-center mt-3" style="border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa;">
+                <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 8px 0 0 8px;">
+                    <span id="Destination" style="display: block; width: 100%; border-radius: 8px;">{{transaction[0]}}</span>
+                </div>
+
+                <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Amount" style="display: block; width: 100%; border-radius: 8px;">{{transaction[1]}}</span>
+                </div>
+
+                <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Type" style="display: block; width: 100%; border-radius: 8px;">{{transaction[2]}}</span>
+                </div>
+                
+                <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Date" style="display: block; width: 100%; border-radius: 8px;">{{transaction[3]}}</span>
+                </div>
+                
+                <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Category" style="display: block; width: 100%; border-radius: 8px;">{{transaction[4]}}</span>
+                </div>
+
+                
+                <div class="col-2 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0; text-align: left;">
+                    <div class="dropdown float-start">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Action 1</a></li>
+                            <li><a class="dropdown-item" href="#">Action 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            
+            
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+    
+
+    <div id="regularTransactions" style="display: none; margin-top: 20px">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="dropdown float-start">
+                    <button class="btn secondary dropdown-toggle" type="button" id="dropdownMenuButtonRegular" data-bs-toggle="dropdown" aria-expanded="false">
+                        <h3><u>Regular Transactions</u></h3>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a id="transactionsHistory2" class="dropdown-item" onclick="switch_visibility('transactions')">Transaction History</a></li>
+                        <li><a id="regularHistory2" class="dropdown-item" onclick="switch_visibility('regular')">Regular Transactions</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row w-100 mx-auto justify-content-center mt-3" style="border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa;">
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 8px 0 0 8px;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Target:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Amount:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Type:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Start Date:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Last Date:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Category:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                <a href="" style="text-decoration: none; color: #000000; ">&uarr; Rate:</a>
+            </div>
+
+            <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+            </div>
+          
+            
+        
+        </div>
+
+        <div class="col-12" style="overflow: auto; max-height: 600px; min-height: 600px;">
+            <!--jinja for loop here for transaction-->
+            <div class="row w-100 mx-auto justify-content-between mt-3" style="border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa;">
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 8px 0 0 8px;">
+                    <span id="Destination" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[0]}}</span>
+                </div>
+
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Amount" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[1]}}</span>
+                </div>
+
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Type" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[2]}}</span>
+                </div>
+
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Date" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[3]}}</span>
+                </div>
+                
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Date" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[4]}}</span>
+                </div>
+                
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Category" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[5]}}</span>
+                </div>
+
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0;">
+                    <span id="Category" style="display: block; width: 100%; border-radius: 8px;">{{regular_transactions[6]}}</span>
+                </div>
+
+                
+
+
+
+                
+                <div class="col-3 mt-3 mb-3" style="padding: 8px; border-radius: 0 8px 8px 0; text-align: left;">
+                    <div class="dropdown float-start">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Action 1</a></li>
+                            <li><a class="dropdown-item" href="#">Action 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            
+            
+            </div>
+
+            <!--ends for loop-->
+        </div>
+    </div>
+
+
+    <script>
+
+        function switch_visibility(block) {
+            transactions = document.getElementById("transactions");
+            regular = document.getElementById("regularTransactions");
+
+            if (block == "transactions") {
+                transactions.style.display = "block";
+                regular.style.display = "none";
+            }
+            else if (block == "regular") {
+                transactions.style.display = "none";
+                regular.style.display = "block";
+            }
+        }
+
+
+    </script>
+
+
+    
+        
+
+    
+{% endblock %}  

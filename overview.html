@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{%block content%}
+
+
+    <div class="row w-100 mx-auto justify-content-center mt-3">
+
+        <div class="col-6" style="display: block" id="profile">
+            <div class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3>User Information</h3>
+                <hr class="w-75 mx-auto my-1"/>
+                <div class="row mt-3">
+                    <div class="col-4" style="border-right: 1px solid #ccc;">
+                        <img src="https://via.placeholder.com/150" alt="User Picture" class="img-fluid">
+                    </div>
+                    <div class="col-8" style="border-left: 1px solid #ccc;">
+                        <div class="row mb-2">
+                            <div class="col-4" style="border-right: 1px solid #ccc;">Name: {{user.first_name}}</div>
+                            <div class="col-8" style="border-left: 1px solid #ccc;"><span id="name" style="border-right: 1px solid #ccc;">John Doe</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4" style="border-right: 1px solid #ccc;">Surname: {{user.last_name}}</div>
+                            <div class="col-8" style="border-left: 1px solid #ccc;"><span id="surname" style="border-right: 1px solid #ccc;">Doe</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4" style="border-right: 1px solid #ccc;">Email: {{user.email}}</div>
+                            <div class="col-8" style="border-left: 1px solid #ccc;"><span id="email" style="border-right: 1px solid #ccc;">john.doe@example.com</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4" style="border-right: 1px solid #ccc;">Date of Birth: {{user.birthday}}</div>
+                            <div class="col-8" style="border-left: 1px solid #ccc;"><span id="dob" style="border-right: 1px solid #ccc;">1990-01-01</span></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4" style="border-right: 1px solid #ccc;">Income: {{user.income}}</div>
+                            <div class="col-8" style="border-left: 1px solid #ccc;"><span id="income" style="border-right: 1px solid #ccc;">$100000</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        
+
+
+        <div class="col-6" style="display: block" id="profile">
+            <div class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3>Recent Transactions</h3>
+                <hr class="w-75 mx-auto my-1"/>
+                {%if last_transactions%}
+                {%for last_transaction in last_transactions%}
+                <div class="row mb-3 mt-3">
+                    <div class="col-3" style="border-right: 1px solid #ccc;">
+                        {{ last_transaction[0] }}
+                    </div>
+
+                    <div class="col-3" style="border-right: 1px solid #ccc;">
+                        {{ last_transaction[1] }}
+                    </div>
+                    
+                    <div class="col-3" style="border-right: 1px solid #ccc;">
+                        {{ last_transaction[2] }}
+                    </div>
+
+                    <div class="col-3" >
+                        {{ last_transaction[3] }}
+                    </div>
+
+                </div>
+
+                {%endfor%}
+                {%else%}
+                <p>No transactions yet</p>
+                {%endif%}
+            </div>
+        </div>
+
+        <hr class="w-75 mx-auto my-1"/>
+
+        <div class="col-6" style="display: block" id="exchangeRates">
+            <div class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3>Exchange Rates</h3>
+                <hr class="w-75 mx-auto my-1"/>
+                
+                <div class="row mb-2 d-flex mt-3" id="dollarTolira">
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                        &#36; 1 USD
+                    </div>
+
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                         12312 &#8378;
+                    </div>
+
+                    <div class="col-3 ">
+                        <button class="btn btn-outline-secondary" onclick="toggleRow(this)">Switch</button>
+                        
+                    </div>
+                </div>
+                
+
+                <div class="row mb-2 d-flex d-none mt-3"  id="dollarTolira2">
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                        &#8378; 1 Turkish Lira
+                    </div>
+
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                         12312 &#36;
+                    </div>
+
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary" onclick="toggleRow(this)">Switch</button>
+                        
+                    </div>
+                </div>
+
+                <div class="row mb-2 d-flex" id="dollarToeuro">
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                        &#36; 1 USD
+                    </div>
+
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                         12312 &#8378;
+                    </div>
+
+                    <div class="col-3 ">
+                        <button class="btn btn-outline-secondary" onclick="toggleRow(this)">Switch</button>
+                        
+                    </div>
+                </div>
+                
+
+                <div class="row mb-2 d-flex d-none"  id="dollarToeuro2">
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                        &#8378; 1 Turkish Lira
+                    </div>
+
+                    <div class="col-3 border-right" style="border-right: 1px solid #ccc;">
+                         12312 &#36;
+                    </div>
+
+                    <div class="col-6">
+                        <button class="btn btn-outline-secondary" onclick="toggleRow(this)">Switch</button>
+                        
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+        <div class="col-6" style="display: block" id="chart">
+            <div id="barChart" class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                
+                
+            </div>
+        </div>
+
+        <hr class="w-75 mx-auto my-1"/>
+
+        <div class="col-6" style="display: block" id="finGoalsCol">
+            <div id="finGoalsContainer" class="container w-100 mt-3 mb-3" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; background-color: #f8f9fa;">
+                <h3 >Recent Financial Goals</h3>
+                <hr class="w-75 mx-auto my-1"/>
+
+                <div class="row">
+                    Name: 
+                </div>
+                <div class="row mx-auto mb-3 mt-3">
+                    <div class="col-4 justfiy-content-start">
+                        Start Date:
+                    </div>
+                    <div class="col-4">
+                        Amount:
+                    </div>
+                    <div class="col-4 justify-content-end">
+                        End Date:
+                    </div>
+                </div>
+                
+                <div class="col-12 progress mb-3">
+                    
+                    <div class="progress-bar" role="progressbar" style="width: 0%; background-color: black;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+
+                    </div>
+                </div>
+
+                <div class="row mx-auto mb-3">
+                    <div class="col-4 justfiy-content-start">
+                        Start Date
+                    </div>
+                    <div class="col-4">
+                        Amount
+                    </div>
+                    <div class="col-4 justify-content-end">
+                        End Date
+                    </div>
+                </div>
+                
+                <div class="col-12 progress mb-3">
+                    
+                    <div class="progress-bar" role="progressbar" style="width: 10%; background-color: black;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6"></div>
+
+
+    </div>
+
+
+    <script>
+        function toggleRow(button) {
+            var div = button.parentNode.parentNode;
+            var divId = div.id
+            var buttonId = button.id
+            if (divId.includes("2")){
+                div.classList.add("d-none")
+                newDivId = divId.replace("2", "")
+                newDiv = document.getElementById(newDivId)
+                newDiv.classList.remove("d-none")
+                
+            }
+            else {
+                div.classList.add("d-none")
+                newDivId = divId + "2"
+                newDiv = document.getElementById(newDivId)
+                newDiv.classList.remove("d-none")
+            }
+            
+
+            
+        }
+    </script>
+
+    <script type="text/javascript">
+        
+    </script>
+{% endblock %}
